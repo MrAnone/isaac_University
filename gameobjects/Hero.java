@@ -12,6 +12,7 @@ public class Hero
 	private Vector2 direction;
 	private double coin_maxValue;
 	private double health_maxValue;
+	private double dmg;
 	
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath)
@@ -21,6 +22,7 @@ public class Hero
 		this.speed = speed;
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
+		this.dmg=3.5;
 	}
 
 	public void updateGameObject()
@@ -140,6 +142,14 @@ public class Hero
 
 	public void setHealth_maxValue(double health_maxValue) {
 		this.health_maxValue = health_maxValue;
+	}
+
+	public double getDmg() {
+		return dmg;
+	}
+
+	public void setDmg(double dmg) {
+		this.dmg = dmg;
 	}
 
 }

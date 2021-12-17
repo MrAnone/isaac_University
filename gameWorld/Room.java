@@ -5,6 +5,9 @@ import java.util.List;
 
 import gameobjects.Consumable_Objects;
 import gameobjects.Hero;
+import gameobjects.ListConsumables;
+import gameobjects.ListPassivesObjects;
+import gameobjects.Objects;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
@@ -12,21 +15,15 @@ import resources.RoomInfos;
 
 public class Room {
 	private Hero hero;
-	private List<Consumable_Objects> listObjects;
+	private ListConsumables listObjects;
+	private ListPassivesObjects listPassives;
 
 	public Room(Hero hero) {
 		this.hero = hero;
-		this.listObjects = new ArrayList<Consumable_Objects>();
-		Consumable_Objects fullHeart= new Consumable_Objects(2,ImagePaths.HEART_PICKABLE);
-		Consumable_Objects halfHeart= new Consumable_Objects(1,ImagePaths.HALF_HEART_PICKABLE);
-		Consumable_Objects penny= new Consumable_Objects(1,ImagePaths.COIN);
-		Consumable_Objects nickel= new Consumable_Objects(5,ImagePaths.NICKEL);
-		Consumable_Objects dime= new Consumable_Objects(10,ImagePaths.DIME);
-		listObjects.add(fullHeart);
-		listObjects.add(halfHeart);
-		listObjects.add(penny);
-		listObjects.add(nickel);
-		listObjects.add(dime);	
+		this.listObjects= new ListConsumables();
+		this.listPassives= new ListPassivesObjects();
+		
+		
 	}
 
 	/*
@@ -54,7 +51,8 @@ public class Room {
 			}
 		}
 		hero.drawGameObject();
-		listObjects.get(2).drawGameObject();
+		listObjects.get(1).drawGameObject();
+		listPassives.get(0).drawGameObject();
 	}
 
 	/**
@@ -80,12 +78,21 @@ public class Room {
 		this.hero = hero;
 	}
 
-	public List<Consumable_Objects> getListObjects() {
+	public ListConsumables getListObjects() {
 		return listObjects;
 	}
 
-	public void setListObjects(List<Consumable_Objects> listObjects) {
+	public void setListObjects(ListConsumables listObjects) {
 		this.listObjects = listObjects;
 	}
+
+	public ListPassivesObjects getListPassives() {
+		return listPassives;
+	}
+
+	public void setListPassives(ListPassivesObjects listPassives) {
+		this.listPassives = listPassives;
+	}
+
 
 }

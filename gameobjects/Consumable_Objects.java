@@ -19,6 +19,14 @@ public class Consumable_Objects {
 		this.position = randomPositionObjects();
 
 	}
+	// A second constructor for the shopRoom where position will be fixed by the room.
+	public Consumable_Objects( double value, String imagePath,Vector2 position) {
+		this.size = RoomInfos.TILE_SIZE.scalarMultiplication(0.3);
+		this.value = value;
+		this.imagePath = imagePath;
+		this.position = position;
+
+	}
 
 	public static Vector2 randomPositionObjects() {
 		Random r = new Random();
