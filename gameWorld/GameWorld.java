@@ -5,6 +5,7 @@ import libraries.StdDraw;
 import resources.Controls;
 import resources.ImagePaths;
 
+
 public class GameWorld
 {
 	private Room currentRoom;
@@ -36,6 +37,7 @@ public class GameWorld
 	{
 		currentRoom.drawRoom();
 	}
+
 	/**
 	 * Allows player to see the hero's stats such as health, coin, speed etc.
 	 */

@@ -17,6 +17,7 @@ public class Hero
 	private double dmg;
 	
 
+
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath)
 	{
 		this.position = position;

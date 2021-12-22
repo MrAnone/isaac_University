@@ -43,3 +43,4 @@ public class Timer
 		startOfLoop = Instant.now();
 	}
 }
+

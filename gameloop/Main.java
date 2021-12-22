@@ -1,9 +1,10 @@
 package gameloop;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import gameWorld.GameWorld;
 import gameobjects.Consumable_Objects;
+import gameWorld.GameWorld;
 import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Timer;
@@ -17,6 +18,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		// Hero, world and display initialisation.
+
 		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, ImagePaths.ISAAC);	
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();

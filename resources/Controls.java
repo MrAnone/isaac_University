@@ -9,3 +9,4 @@ public class Controls
 	public static int goRight = Keybinding.keycodeOf('d');
 	public static int goLeft = Keybinding.keycodeOf('q');
 }
+

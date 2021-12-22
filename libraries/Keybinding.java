@@ -40,3 +40,4 @@ public class Keybinding
 		return (int) character - 32;
 	}
 }
+
