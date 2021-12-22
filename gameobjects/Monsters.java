@@ -9,20 +9,16 @@ public abstract class Monsters {
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
+	private int life;
 	
-	/*private int life;
-	private int dégat_corpsàcorps;
-	private int dégats;
-	private int portée;
-	private int vitesse_projetiles;*/
-	
-	public Monsters(Vector2 position, Vector2 size, double speed, String imagePath)
+	public Monsters(Vector2 position, Vector2 size, double speed, int life, Vector2 direction, String imagePath)
 	{
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
 		this.imagePath = imagePath;
-		this.direction = new Vector2();
+		this.direction = direction;
+		this.life = life;
 	}
 
 	public void updateGameObject()
@@ -32,15 +28,14 @@ public abstract class Monsters {
 
 	private void move()
 	{
-		moveSpider();
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
-		setPosition(positionAfterMoving);
-		direction = new Vector2();
-	}
-	
-	private void moveSpider() {
-		getDirection().addY(1);
+		if (libraries.Physics.ZonedeJeu(positionAfterMoving,getSize())){
+			setPosition(positionAfterMoving);
+		}
+		else {
+			 direction = new Vector2 (Math.random()*(2.0-0.0)-1.0,Math.random()*(2.0-0.0)-1.0);
+		}
 	}
 
 	public void drawGameObject()
@@ -108,6 +103,16 @@ public abstract class Monsters {
 	public void setDirection(Vector2 direction)
 	{
 		this.direction = direction;
+	}
+	
+	public int getLife()
+	{
+		return life;
+	}
+
+	public void setLife(int life)
+	{
+		this.life = life;
 	}
 
 }

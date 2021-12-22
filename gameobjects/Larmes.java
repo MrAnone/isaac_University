@@ -1,9 +1,13 @@
 package gameobjects;
 
+import java.util.ArrayList;
+
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.HeroInfos;
+import resources.MonstersInfos;
 import resources.ImagePaths;
+import gameWorld.Room;
 
 public class Larmes {
 	private Vector2 position;
@@ -11,19 +15,38 @@ public class Larmes {
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
+	private int scope;
 	
-	public Larmes(Vector2 position,Vector2 direction, Vector2 size, double speed, String imagePath)
+	public Larmes(Vector2 position,Vector2 direction, Vector2 size, double speed, int scope, String imagePath)
 	{
 		this.position = position;
 		this.direction = direction;
 		this.size = size;
 		this.speed = speed;
 		this.imagePath = imagePath;
+		this.scope = scope;
 	}
 	
-	public static void createLarmes(Vector2 position,Vector2 direction) {
-		Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, HeroInfos.LARMES_SPEED,ImagePaths.TEAR);
-		gameWorld.Room.afficherLarmes(shoot);
+	public static boolean createLarmesHero(Vector2 position,Vector2 direction, boolean Shoot) {
+		if (!Shoot) {
+			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, HeroInfos.LARMES_SPEED, HeroInfos.LARMES_SCOPE,ImagePaths.TEAR);
+			Room.larmes_list.add(shoot);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static boolean createLarmesFly(Vector2 position,Vector2 direction, ArrayList<Larmes> larmes_list, boolean Shoot) {
+		if (Shoot == false) {
+			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, MonstersInfos.LARMES_SPEED, MonstersInfos.LARMES_SCOPE,ImagePaths.TEAR);
+			larmes_list.add(shoot);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public void updateGameObject()
@@ -101,5 +124,15 @@ public class Larmes {
 	public void setDirection(Vector2 direction)
 	{
 		this.direction = direction;
+	}
+	
+	public int getScope()
+	{
+		return scope;
+	}
+
+	public void setScope(int scope)
+	{
+		this.scope = scope;
 	}
 }

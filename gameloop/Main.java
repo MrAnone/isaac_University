@@ -15,7 +15,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		// Hero, world and display initialisation.
-		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, ImagePaths.ISAAC);
+		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, HeroInfos.ISAAC_LIFE, ImagePaths.ISAAC);
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();
 
@@ -24,6 +24,9 @@ public class Main
 		{
 			processNextStep(world);
 		}
+		StdDraw.clear();
+		StdDraw.picture(0.5,0.5,ImagePaths.LOSE_SCREEN,1.0,1.0,0);
+		StdDraw.show();
 	}
 
 	private static void processNextStep(GameWorld world)

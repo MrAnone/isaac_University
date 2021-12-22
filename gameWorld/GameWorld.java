@@ -1,11 +1,13 @@
 package gameWorld;
 
-import gameobjects.Hero;
 import gameobjects.Fly;
+import gameobjects.Spider;
+import gameobjects.Hero;
 import libraries.StdDraw;
 import resources.Controls;
 import resources.HeroInfos;
 import resources.ImagePaths;
+import resources.MonstersInfos;
 import resources.RoomInfos;
 
 public class GameWorld
@@ -17,7 +19,6 @@ public class GameWorld
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
-		//Fly mouche = new Fly(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED,ImagePaths.FLY);
 		currentRoom = new Room_classic(hero);
 	}
 
@@ -29,12 +30,19 @@ public class GameWorld
 
 	public boolean gameOver()
 	{
-		return false;
+		if (hero.getLife()==0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	public void updateGameObjects()
 	{
 		currentRoom.updateRoom();
+		
 	}
 
 	public void drawGameObjects()

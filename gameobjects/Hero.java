@@ -16,15 +16,21 @@ public class Hero
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
+	private int life;
+	private int TimeLarmes ;
+	private boolean Shoot ;
 
 
-	public Hero(Vector2 position, Vector2 size, double speed, String imagePath)
+	public Hero(Vector2 position, Vector2 size, double speed, int life, String imagePath)
 	{
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
+		this.life = life;
+		this.TimeLarmes = HeroInfos.LARMES_FRAME;
+		this.Shoot = false;
 	}
 
 	public void updateGameObject()
@@ -42,7 +48,6 @@ public class Hero
 		}
 		else {
 			direction = new Vector2();
-			
 		}
 	}
 
@@ -56,28 +61,42 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(1);
-		gameobjects.Larmes.createLarmes(getPosition(),direction);
+		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		if (shoot) {
+			setShoot(true);
+		}
+		
 	}
 
 	public void shootDown()
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(-1);
-		gameobjects.Larmes.createLarmes(getPosition(),direction);
+		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		if (shoot) {
+			setShoot(true);
+		}
+		
 	}
 
 	public void shootLeft()
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(-1);
-		gameobjects.Larmes.createLarmes(getPosition(),direction);
+		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		if (shoot) {
+			setShoot(true);
+		}
 	}
 
 	public void shootRight()
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(1);
-		gameobjects.Larmes.createLarmes(getPosition(),direction);
+		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		if (shoot) {
+			setShoot(true);
+		}
 	}
 
 	/*
@@ -162,5 +181,35 @@ public class Hero
 	public void setDirection(Vector2 direction)
 	{
 		this.direction = direction;
+	}
+	
+	public int getLife()
+	{
+		return life;
+	}
+
+	public void setLife(int life)
+	{
+		this.life = life;
+	}
+	
+	public int getTimeLarmes()
+	{
+		return TimeLarmes;
+	}
+
+	public void setTimeLarmes(int TimeLarmes)
+	{
+		this.TimeLarmes = TimeLarmes;
+	}
+	
+	public boolean getShoot()
+	{
+		return Shoot;
+	}
+
+	public void setShoot(boolean Shoot)
+	{
+		this.Shoot = Shoot;
 	}
 }
