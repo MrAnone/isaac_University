@@ -35,6 +35,7 @@ public class Main
 		world.processUserInput();
 		world.updateGameObjects();
 		world.drawGameObjects();
+		world.drawHUD();
 		StdDraw.show();
 		Timer.waitToMaintainConstantFPS();
 	}

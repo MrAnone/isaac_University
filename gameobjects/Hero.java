@@ -10,7 +10,9 @@ public class Hero
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
-	private double coin_maxValue;
+	private int  currentCoin;
+	private double  currentHealth;
+	private final int coin_maxValue=99;
 	private double health_maxValue;
 	private double dmg;
 	
@@ -23,6 +25,9 @@ public class Hero
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
 		this.dmg=3.5;
+		this.health_maxValue=6;
+		this.currentHealth=5;
+		this.currentCoin=0;
 	}
 
 	public void updateGameObject()
@@ -132,10 +137,6 @@ public class Hero
 		return coin_maxValue;
 	}
 
-	public void setCoin_maxValue(double coin_maxValue) {
-		this.coin_maxValue = coin_maxValue;
-	}
-
 	public double getHealth_maxValue() {
 		return health_maxValue;
 	}
@@ -150,6 +151,22 @@ public class Hero
 
 	public void setDmg(double dmg) {
 		this.dmg = dmg;
+	}
+
+	public int getCurrentCoin() {
+		return currentCoin;
+	}
+
+	public void setCurrentCoin(int currentCoin) {
+		this.currentCoin = currentCoin;
+	}
+
+	public double getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setCurrentHealth(double currentHealth) {
+		this.currentHealth = currentHealth;
 	}
 
 }

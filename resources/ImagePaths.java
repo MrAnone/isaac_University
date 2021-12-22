@@ -41,4 +41,7 @@ public class ImagePaths
 
 	public static final String WIN_SCREEN = "images/win.jpg";
 	public static final String LOSE_SCREEN = "images/lose.png";
+	public static final String COIN_HUD = "images/HUD_coin.png";
+	public static final String SPEED_HUD = "images/Speed_Stat_Icon.png";
+	public static final String DMG_HUD = "images/Damage_Stat_Icon.png";
 }

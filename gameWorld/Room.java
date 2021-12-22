@@ -51,7 +51,10 @@ public class Room {
 			}
 		}
 		hero.drawGameObject();
-		listObjects.get(1).drawGameObject();
+		for(int i=0;i<listObjects.size();i++) {
+			listObjects.get(i).drawGameObject();
+		}
+		
 		listPassives.get(0).drawGameObject();
 	}
 

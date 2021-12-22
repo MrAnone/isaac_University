@@ -24,6 +24,9 @@ public class ListConsumables {
 	public ArrayList<Consumable_Objects> getListConsumableObjects() {
 		return listConsumableObjects;
 	}
+	public int size() {
+		return listConsumableObjects.size();
+	}
 
 	public void setListConsumableObjects(ArrayList<Consumable_Objects> listConsumableObjects) {
 		this.listConsumableObjects = listConsumableObjects;
