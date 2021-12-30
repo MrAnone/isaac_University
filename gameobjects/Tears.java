@@ -1,15 +1,9 @@
 package gameobjects;
 
-import java.util.ArrayList;
-
 import libraries.StdDraw;
 import libraries.Vector2;
-import resources.HeroInfos;
-import resources.MonstersInfos;
-import resources.ImagePaths;
-import gameWorld.Room;
 
-public class Larmes {
+public class Tears {
 	private Vector2 position;
 	private Vector2 size;
 	private String imagePath;
@@ -17,7 +11,7 @@ public class Larmes {
 	private Vector2 direction;
 	private int scope;
 	
-	public Larmes(Vector2 position,Vector2 direction, Vector2 size, double speed, int scope, String imagePath)
+	public Tears(Vector2 position,Vector2 direction, Vector2 size, double speed, int scope, String imagePath)
 	{
 		this.position = position;
 		this.direction = direction;
@@ -25,28 +19,6 @@ public class Larmes {
 		this.speed = speed;
 		this.imagePath = imagePath;
 		this.scope = scope;
-	}
-	
-	public static boolean createLarmesHero(Vector2 position,Vector2 direction, boolean Shoot) {
-		if (!Shoot) {
-			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, HeroInfos.LARMES_SPEED, HeroInfos.LARMES_SCOPE,ImagePaths.TEAR);
-			Room.larmes_list.add(shoot);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public static boolean createLarmesFly(Vector2 position,Vector2 direction, ArrayList<Larmes> larmes_list, boolean Shoot) {
-		if (Shoot == false) {
-			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, MonstersInfos.LARMES_SPEED, MonstersInfos.LARMES_SCOPE,ImagePaths.TEAR);
-			larmes_list.add(shoot);
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 	
 	public void updateGameObject()

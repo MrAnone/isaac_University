@@ -39,10 +39,10 @@ public class Physics
 		// errors.
 		double authorizedOverlap = RoomInfos.TILE_WIDTH / 1000;
 
-		boolean tooFarLeft = pos1.getX() - (size1.getX() / 2) < authorizedOverlap ;
-		boolean tooFarBelow = pos1.getY() - (size1.getY() / 2) < authorizedOverlap ;
-		boolean tooFarRight = pos1.getX() + (size1.getX() / 2) + authorizedOverlap > 1.0;
-		boolean tooFarAbove = pos1.getY() + (size1.getY() / 2) + authorizedOverlap > 1.0;
+		boolean tooFarLeft = pos1.getX() - (size1.getX() / 2) - 0.1 < authorizedOverlap ;
+		boolean tooFarBelow = pos1.getY() - (size1.getY() / 2) - 0.1 < authorizedOverlap ;
+		boolean tooFarRight = pos1.getX() + (size1.getX() / 2) + authorizedOverlap > 0.9;
+		boolean tooFarAbove = pos1.getY() + (size1.getY() / 2) + authorizedOverlap > 0.9;
 
 		if (tooFarLeft || tooFarRight || tooFarAbove || tooFarBelow)
 		{

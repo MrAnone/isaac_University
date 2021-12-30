@@ -2,7 +2,6 @@ package gameloop;
 
 import gameWorld.GameWorld;
 import gameobjects.Hero;
-import gameobjects.Fly;
 import libraries.StdDraw;
 import libraries.Timer;
 import resources.DisplaySettings;
@@ -36,6 +35,7 @@ public class Main
 		world.processUserInput();
 		world.updateGameObjects();
 		world.drawGameObjects();
+		world.drawHUD();
 		StdDraw.show();
 		Timer.waitToMaintainConstantFPS();
 	}

@@ -6,7 +6,8 @@ import resources.MonstersInfos;
 import gameobjects.Fly;
 import gameobjects.Spider;
 import gameobjects.Hero;
-import gameobjects.Larmes;
+import gameobjects.Tears;
+import resources.HeroInfos;
 import resources.ImagePaths;
 import resources.RoomInfos;
 import libraries.StdDraw;
@@ -18,8 +19,8 @@ public class Room_classic extends Room{
 	private ArrayList<Fly> Fly_list;
 	private ArrayList<Spider> Spider_list;
 	
-	public Room_classic(Hero hero) {
-		super(hero);
+	public Room_classic(Hero hero,String ID) {
+		super(hero, ID);
 		this.hero = hero;
 		Fly_list = new ArrayList <Fly>();
 		Spider_list = new ArrayList <Spider>();
@@ -28,14 +29,19 @@ public class Room_classic extends Room{
 	}
 	private void CreateSpider() {
 		for(int i=0 ; i<1;i++) {
-			Spider arraigné = new Spider(new Vector2 (Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getX()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getX()))),Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getY()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getY())))-(resources.MonstersInfos.FLY_SIZE.getY()/2)), MonstersInfos.SPIDER_SIZE, MonstersInfos.SPIDER_SPEED, MonstersInfos.SPIDER_LIFE, new Vector2 (Math.random()*(2.0-0.0)-1.0,Math.random()*(2.0-0.0)-1.0), ImagePaths.SPIDER);
+			//Vector2 position = new Vector2 (Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getX()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getX()))),Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getY()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getY())))-(resources.MonstersInfos.FLY_SIZE.getY()/2));
+			Vector2 position = new Vector2 (0.75,0.75);
+			Vector2 direction = new Vector2 (Math.random()*(2.0-0.0)-1.0,Math.random()*(2.0-0.0)-1.0);
+			Spider arraigné = new Spider(position, MonstersInfos.SPIDER_SIZE, MonstersInfos.SPIDER_SPEED, MonstersInfos.SPIDER_LIFE,direction, ImagePaths.SPIDER);
 			Spider_list.add(arraigné);
 		}
 	}
 	
 	private void CreateFly() {
-		Vector2 position = new Vector2 (Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getX()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getX()))),Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getY()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getY())))-(resources.MonstersInfos.FLY_SIZE.getY()/2));
-		Fly mouche = new Fly(position, MonstersInfos.FLY_SIZE, MonstersInfos.FLY_SPEED, MonstersInfos.FLY_LIFE, new Vector2 (hero.getPosition().getX()-position.getX(),hero.getPosition().getY()-position.getY()), ImagePaths.FLY);
+		//Vector2 position = new Vector2 (Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getX())/2)-(0.0+(resources.MonstersInfos.FLY_SIZE.getX())/2)),Math.random()*((1.0-(resources.MonstersInfos.FLY_SIZE.getY()))-(0.0+(resources.MonstersInfos.FLY_SIZE.getY())))-(resources.MonstersInfos.FLY_SIZE.getY()/2));
+		Vector2 position = new Vector2 (0.75,0.75);
+		Vector2 direction = new Vector2 (hero.getPosition().getX()-position.getX(),hero.getPosition().getY()-position.getY());
+		Fly mouche = new Fly(position, MonstersInfos.FLY_SIZE, MonstersInfos.FLY_SPEED, MonstersInfos.FLY_LIFE, direction, ImagePaths.FLY);
 		Fly_list.add(mouche);
 	}
 	
@@ -48,8 +54,8 @@ public class Room_classic extends Room{
 	private void FlyDraw() {
 		for(int i=0;i<Fly_list.size();i++) {
 			Fly_list.get(i).drawGameObject();
-			for(int j=0;j<Fly_list.get(i).larmesFly_list.size();j++) {
-				Fly_list.get(i).larmesFly_list.get(j).drawGameObject();
+			for(int j=0;j<Fly_list.get(i).Tears_Fly_size();j++) {
+				Fly_list.get(i).Tears_Fly_get(j).drawGameObject();
 			}
 		}
 	}
@@ -71,12 +77,12 @@ public class Room_classic extends Room{
 	}
 	private void collisionLarmesFly_Mur() {
 		for(int j=0;j<Fly_list.size();j++) {
-			for(int i=0;i<Fly_list.get(j).larmesFly_list.size();i++) {
-				Vector2 normalizedDirection = new Vector2(Fly_list.get(j).larmesFly_list.get(i).getDirection());
-				normalizedDirection.euclidianNormalize(Fly_list.get(j).larmesFly_list.get(i).getSpeed());
-				Vector2 positionAfterMoving = Fly_list.get(j).larmesFly_list.get(i).getPosition().addVector(normalizedDirection);
-				if (!libraries.Physics.ZonedeJeu(positionAfterMoving,Fly_list.get(j).larmesFly_list.get(i).getSize())){
-					Fly_list.get(j).larmesFly_list.remove(i);
+			for(int i=0;i<Fly_list.get(j).Tears_Fly_size();i++) {
+				Vector2 normalizedDirection = new Vector2(Fly_list.get(j).Tears_Fly_get(i).getDirection());
+				normalizedDirection.euclidianNormalize(Fly_list.get(j).Tears_Fly_get(i).getSpeed());
+				Vector2 positionAfterMoving = Fly_list.get(j).Tears_Fly_get(i).getPosition().addVector(normalizedDirection);
+				if (!libraries.Physics.ZonedeJeu(positionAfterMoving,Fly_list.get(j).Tears_Fly_get(i).getSize())){
+					Fly_list.get(j).Tears_Fly_remove(i);
 				}
 		}
 		}
@@ -86,21 +92,21 @@ public class Room_classic extends Room{
 	
 	
 	private void collisionLarmes_Spiders() {
-		for(int i=0;i<larmes_list.size();i++) {
+		for(int i=0;i<hero.tears_size();i++) {
 			for(int j=0;j<Spider_list.size();j++) {
-				if (libraries.Physics.rectangleCollision(larmes_list.get(i).getPosition(),larmes_list.get(i).getSize(),Spider_list.get(j).getPosition(),Spider_list.get(j).getSize())) {
+				if (libraries.Physics.rectangleCollision(hero.tears_get(i).getPosition(),hero.tears_get(i).getSize(),Spider_list.get(j).getPosition(),Spider_list.get(j).getSize())) {
 					Spider_list.get(j).setLife(Spider_list.get(j).getLife()-1);
-					larmes_list.remove(i);
+					hero.tears_remove(i);
 				}
 			}
 		}
 	}
 	private void collisionLarmes_Fly() {
-		for(int i=0;i<larmes_list.size();i++) {
+		for(int i=0;i<hero.tears_size();i++) {
 			for(int j=0;j<Fly_list.size();j++) {
-				if (libraries.Physics.rectangleCollision(larmes_list.get(i).getPosition(),larmes_list.get(i).getSize(),Fly_list.get(j).getPosition(),Fly_list.get(j).getSize())) {
+				if (libraries.Physics.rectangleCollision(hero.tears_get(i).getPosition(),hero.tears_get(i).getSize(),Fly_list.get(j).getPosition(),Fly_list.get(j).getSize())) {
 					Fly_list.get(j).setLife(Fly_list.get(j).getLife()-1);
-					larmes_list.remove(i);
+					hero.tears_remove(i);
 				}
 			}
 		}
@@ -108,10 +114,10 @@ public class Room_classic extends Room{
 	
 	private void collisionLarmesFly_Isaac() {
 		for(int i=0;i<Fly_list.size();i++) {
-			for(int j=0;j<Fly_list.get(i).larmesFly_list.size();j++) {
-				if (libraries.Physics.rectangleCollision(hero.getPosition(),hero.getSize(),Fly_list.get(i).larmesFly_list.get(j).getPosition(),Fly_list.get(i).larmesFly_list.get(j).getSize())) {
-					hero.setLife(hero.getLife()-1);
-					Fly_list.get(i).larmesFly_list.remove(j);
+			for(int j=0;j<Fly_list.get(i).Tears_Fly_size();j++) {
+				if (libraries.Physics.rectangleCollision(hero.getPosition(),hero.getSize(),Fly_list.get(i).Tears_Fly_get(j).getPosition(),Fly_list.get(i).Tears_Fly_get(j).getSize())) {
+					hero.setCurrentHealth(hero.getCurrentHealth()-1);
+					Fly_list.get(i).Tears_Fly_remove(j);
 				}
 			}
 		}
@@ -121,7 +127,7 @@ public class Room_classic extends Room{
 	private void collisionFly_Isaac() {
 		for(int j=0;j<Fly_list.size();j++) {
 			if (libraries.Physics.rectangleCollision(hero.getPosition(),hero.getSize(),Fly_list.get(j).getPosition(),Fly_list.get(j).getSize())) {
-				hero.setLife(hero.getLife()-1);
+				hero.setCurrentHealth(hero.getCurrentHealth()-1);
 				Fly_list.get(j).setDirection(Fly_list.get(j).getDirection().reverse());
 			}
 		}
@@ -130,7 +136,7 @@ public class Room_classic extends Room{
 	private void collisionSpider_Isaac() {
 		for(int j=0;j<Spider_list.size();j++) {
 			if (libraries.Physics.rectangleCollision(hero.getPosition(),hero.getSize(),Spider_list.get(j).getPosition(),Spider_list.get(j).getSize())) {
-				hero.setLife(hero.getLife()-1);
+				hero.setCurrentHealth(hero.getCurrentHealth()-1);
 				Spider_list.get(j).setDirection(Spider_list.get(j).getDirection().reverse());
 			}
 		}
@@ -177,11 +183,21 @@ public class Room_classic extends Room{
 	}
 	
 	private void makeLarmesFlyPlay(Fly mouche) {
-		boolean shoot = Larmes.createLarmesFly(mouche.getPosition(),mouche.getDirection(),mouche.larmesFly_list,mouche.getShoot());
+		boolean shoot = createLarmesFly(mouche);
 		if (shoot) {
 			mouche.setShoot(true);
 		}
 		makeLarmesPlayFly(mouche);
+	}
+	private boolean createLarmesFly(Fly mouche) {
+		if (mouche.getShoot() == false) {
+			Tears shoot = new Tears(mouche.getPosition(),mouche.getDirection(), HeroInfos.LARMES_SIZE, MonstersInfos.LARMES_SPEED, MonstersInfos.LARMES_SCOPE,ImagePaths.TEAR_FLY);
+			mouche.Tears_Fly_add(shoot);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	private void makeLarmesPlayFly(Fly mouche)
 	{
@@ -192,22 +208,15 @@ public class Room_classic extends Room{
 		else if (mouche.getShoot()) {
 			mouche.setTimeLarmes(mouche.getTimeLarmes()-1);;
 		}
-		for(int i=0;i<mouche.larmesFly_list.size();i++) {
-			mouche.larmesFly_list.get(i).setScope(mouche.larmesFly_list.get(i).getScope()-1);
-			if (mouche.larmesFly_list.get(i).getScope()==0) {
-				mouche.larmesFly_list.remove(i);
+		for(int i=0;i<mouche.Tears_Fly_size();i++) {
+			mouche.Tears_Fly_get(i).setScope(mouche.Tears_Fly_get(i).getScope()-1);
+			if (mouche.Tears_Fly_get(i).getScope()==0) {
+				mouche.Tears_Fly_remove(i);
 			}
 			else {
-				mouche.larmesFly_list.get(i).updateGameObject();
+				mouche.Tears_Fly_get(i).updateGameObject();
 			}
 		}
-	}
-	
-	private void Afficher() {
-		StdDraw.picture(0.929,0.5,ImagePaths.CLOSED_DOOR,0.2,0.15,90.0);
-		StdDraw.picture(0.071,0.5,ImagePaths.CLOSED_DOOR,0.2,0.15,-90.0);
-		StdDraw.picture(0.5,0.071,ImagePaths.CLOSED_DOOR,0.2,0.15,0.0);
-		StdDraw.picture(0.5,0.929,ImagePaths.OPENED_DOOR,0.2,0.15,180.0);
 	}
 	@Override
 	public void  drawRoom () {
@@ -225,7 +234,8 @@ public class Room_classic extends Room{
 		SpiderDraw();
 		FlyDraw();
 		Larmes();
-		//Afficher();
+		drawObject();
+		DrawDoor();
 	}
 	
 	/**

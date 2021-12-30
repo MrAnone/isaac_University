@@ -3,11 +3,9 @@ package gameobjects;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
-import resources.MonstersInfos;
 import resources.HeroInfos;
-import resources.RoomInfos;
-import libraries.Physics;
-import gameobjects.Larmes;
+
+import java.util.ArrayList;
 
 public class Hero
 {
@@ -16,9 +14,14 @@ public class Hero
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
-	private int life;
 	private int TimeLarmes ;
 	private boolean Shoot ;
+	private ArrayList<Tears> tears_list;
+	private int  currentCoin;
+	private double  currentHealth;
+	private final int coin_maxValue=99;
+	private double health_maxValue;
+	private double dmg;
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, int life, String imagePath)
@@ -28,9 +31,13 @@ public class Hero
 		this.speed = speed;
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
-		this.life = life;
 		this.TimeLarmes = HeroInfos.LARMES_FRAME;
 		this.Shoot = false;
+		tears_list = new ArrayList <Tears>();
+		this.dmg=3.5;
+		this.health_maxValue=6;
+		this.currentHealth=5;
+		this.currentCoin=0;
 	}
 
 	public void updateGameObject()
@@ -57,11 +64,23 @@ public class Hero
 				0);
 	}
 	
+	private boolean createTearsHero(Vector2 direction) {
+		if (!Shoot) {
+			Tears shoot = new Tears(position,direction, HeroInfos.LARMES_SIZE, HeroInfos.LARMES_SPEED, HeroInfos.LARMES_SCOPE,ImagePaths.TEAR);
+			tears_list.add(shoot);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public void shootUp()
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(1);
-		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
@@ -72,7 +91,8 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(-1);
-		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
@@ -83,7 +103,8 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(-1);
-		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
@@ -93,7 +114,8 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(1);
-		boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
@@ -183,16 +205,6 @@ public class Hero
 		this.direction = direction;
 	}
 	
-	public int getLife()
-	{
-		return life;
-	}
-
-	public void setLife(int life)
-	{
-		this.life = life;
-	}
-	
 	public int getTimeLarmes()
 	{
 		return TimeLarmes;
@@ -212,4 +224,58 @@ public class Hero
 	{
 		this.Shoot = Shoot;
 	}
+	
+	public Tears tears_get(int i)
+	{
+		return tears_list.get(i);
+	}
+	
+	public void tears_remove(int i)
+	{
+		tears_list.remove(i);
+	}
+	
+	public int tears_size()
+	{
+		return tears_list.size();
+	}
+	
+	public double getCoin_maxValue() {
+		return coin_maxValue;
+	}
+
+	public double getHealth_maxValue() {
+		return health_maxValue;
+	}
+
+	public void setHealth_maxValue(double health_maxValue) {
+		this.health_maxValue = health_maxValue;
+	}
+
+	public double getDmg() {
+		return dmg;
+	}
+
+	public void setDmg(double dmg) {
+		this.dmg = dmg;
+	}
+
+	public int getCurrentCoin() {
+		return currentCoin;
+	}
+
+	public void setCurrentCoin(int currentCoin) {
+		this.currentCoin = currentCoin;
+	}
+
+	public double getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setCurrentHealth(double currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+
+	
+	
 }
