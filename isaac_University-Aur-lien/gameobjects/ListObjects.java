@@ -3,6 +3,7 @@ package gameobjects;
 import java.util.ArrayList;
 
 import resources.ImagePaths;
+import resources.RoomInfos;
 
 public class ListObjects {
 	private ArrayList<Objects> listObjects;
@@ -10,7 +11,9 @@ public class ListObjects {
 	public ListObjects() {
 		this.listObjects = new ArrayList<Objects>();
 		PassivesObjects martyrOfBlood = new PassivesObjects(0,ImagePaths.BLOOD_OF_THE_MARTYR);
+		martyrOfBlood.setSize(RoomInfos.TILE_SIZE.scalarMultiplication(0.5)); // too small otherwise
 		PassivesObjects hpUp = new PassivesObjects(1,ImagePaths.HP_UP);
+		hpUp.setSize(RoomInfos.TILE_SIZE.scalarMultiplication(0.5)); // too small otherwise
 		Consumable_Objects fullHeart= new Consumable_Objects(2,ImagePaths.HEART_PICKABLE,2);
 		Consumable_Objects halfHeart= new Consumable_Objects(3,ImagePaths.HALF_HEART_PICKABLE,1);
 		Consumable_Objects penny= new Consumable_Objects(4,ImagePaths.COIN,1);

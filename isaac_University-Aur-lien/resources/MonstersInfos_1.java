@@ -16,12 +16,8 @@ public class MonstersInfos {
 	public static Vector2 SPIDER_SIZE = RoomInfos.TILE_SIZE.scalarMultiplication(0.4);
 	public static final int SPIDER_LIFE = 5;
 	
-	public static final double BOSS_SPEED = 0.03;
-	public static Vector2 BOSS_SIZE= RoomInfos.TILE_SIZE.scalarMultiplication(0.4);
-	public static final int BOSS_LIFE = 15;
-	
-	public static int dÈgat_corps_corps = 5;
-	public static int dÈgats = 2;
-	public static int portÈe = 20;
+	public static int d√©gat_corps√†corps = 5;
+	public static int d√©gats = 2;
+	public static int port√©e = 20;
 	public static double vitesse_projetiles = 0.001 ;
 }

@@ -1,32 +1,40 @@
 package gameWorld;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import gameobjects.Hero;
-import gameobjects.Larmes;
 import gameobjects.ListEntity;
 import gameobjects.Objects;
+import gameobjects.Door;
 import gameobjects.Entity;
+import libraries.StdDraw;
 import libraries.Vector2;
+import resources.ImagePaths;
 
 public abstract class Room {
 	private Hero hero;
-	public static ArrayList<Larmes> larmes_list;
 	private ArrayList<Objects> listObjectOnFloor;
 	private ArrayList<Entity> listEntitiesOnRoom;
 	private boolean roomAlredayCleared;
+	private boolean hurtBySpikes;
+	private ArrayList<Door> Door_list;
+	private String ID;
 
-	public Room(Hero hero) {
+	public Room(Hero hero,String ID) {
 		this.hero = hero;
-		larmes_list = new ArrayList<Larmes>();
+		this.ID=ID;
+		Door_list = new ArrayList <Door>();
 		this.listObjectOnFloor = new ArrayList<Objects>();
 		this.roomAlredayCleared = false;
-		this.listEntitiesOnRoom = new ArrayList<Entity>();
+		this.listEntitiesOnRoom = new ArrayList<Entity>();	
+		CreateDoor();
+		hurtBySpikes=false;
 	}
 
 	public void Larmes() {
-		for (int i = 0; i < larmes_list.size(); i++) {
-			larmes_list.get(i).drawGameObject();
+		for(int i=0;i<hero.tears_size();i++) {
+			hero.tears_get(i).drawGameObject();
 		}
 	}
 
@@ -52,46 +60,33 @@ public abstract class Room {
 		}
 
 	}
-
-	/*
-	 * public void createListObject() { ListObjects listFullObjects = new
-	 * ListObjects(); int randomMax = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-	 * for (int i = 0; i < randomMax; i++) { int randomIndex =
-	 * ThreadLocalRandom.current().nextInt(0, listFullObjects.size());
-	 * listObjectOnFloor.add(listFullObjects.get(randomIndex));
-	 * 
-	 * } }
-	 * 
-	 * public Objects randomObject() { int randomNum =
-	 * ThreadLocalRandom.current().nextInt(0, listObject.size() + 1); return
-	 * listObject.get(randomNum); }
-	 */
-
-	public void collisionObjectAndHero() {
-		for (int i = 0; i < listObjectOnFloor.size(); i++) {
-			if (libraries.Physics.rectangleCollision(hero.getPosition(), hero.getSize(),
-					listObjectOnFloor.get(i).getPosition(), listObjectOnFloor.get(i).getSize())) {
-				hero.pickobject(listObjectOnFloor.get(i));
-				listObjectOnFloor.remove(i);
-
-			}
+	public void canGetHurtBySpikes() {
+		if(hurtBySpikes) {
+			hurtBySpikes=false;
+		}else {
+			hurtBySpikes=true;
 		}
+		
 	}
 
-	// fonctionne pas encore pour les cailloux
+	public abstract void collisionObjectAndHero();
+	
+
 	public void collisionEntitiesAndHero() {
 		for (int i = 0; i < listEntitiesOnRoom.size(); i++) {
 			Vector2 normalizedDirection = new Vector2(hero.getDirection());
 			normalizedDirection.euclidianNormalize(hero.getSpeed());
-			Vector2 positionAfterMoving =hero.getPosition().addVector(normalizedDirection);
-			if (libraries.Physics.rectangleCollision(positionAfterMoving,hero.getSize(),listEntitiesOnRoom.get(i).getPosition(), listEntitiesOnRoom.get(i).getSize())) {
+			Vector2 positionAfterMoving = hero.getPosition().addVector(normalizedDirection);
+			if (libraries.Physics.rectangleCollision(positionAfterMoving, hero.getSize(),
+					listEntitiesOnRoom.get(i).getPosition(), listEntitiesOnRoom.get(i).getSize())) {
 				String id = listEntitiesOnRoom.get(i).getId();
 				switch (id) {
 				case "rock":
 					hero.setDirection(new Vector2());
 					break;
 				default:
-					hero.setCurrentHealth(hero.getCurrentHealth()-1); // too fast
+					hero.setCurrentHealth(hero.getCurrentHealth() - 1);// too fast
+					
 					break;
 				}
 			}
@@ -99,30 +94,31 @@ public abstract class Room {
 	}
 
 	public void collisionLarmes_Mur() {
-		for (int i = 0; i < larmes_list.size(); i++) {
-			Vector2 normalizedDirection = new Vector2(larmes_list.get(i).getDirection());
-			normalizedDirection.euclidianNormalize(larmes_list.get(i).getSpeed());
-			Vector2 positionAfterMoving = larmes_list.get(i).getPosition().addVector(normalizedDirection);
-			if (!libraries.Physics.ZonedeJeu(positionAfterMoving, larmes_list.get(i).getSize())) {
-				larmes_list.remove(i);
+		for(int i=0;i<hero.tears_size();i++) {
+			Vector2 normalizedDirection = new Vector2(hero.tears_get(i).getDirection());
+			normalizedDirection.euclidianNormalize(hero.tears_get(i).getSpeed());
+			Vector2 positionAfterMoving = hero.tears_get(i).getPosition().addVector(normalizedDirection);
+			if (!libraries.Physics.ZonedeJeu(positionAfterMoving,hero.tears_get(i).getSize())){
+				hero.tears_remove(i);
 			}
 		}
-
 	}
 
 	public void makeLarmesPlay() {
-		if (hero.getTimeLarmes() == 0) {
+		if(hero.getTimeLarmes()==0) {
 			hero.setShoot(false);
 			hero.setTimeLarmes(resources.HeroInfos.LARMES_FRAME);
-		} else if (hero.getShoot()) {
-			hero.setTimeLarmes(hero.getTimeLarmes() - 1);
 		}
-		for (int i = 0; i < larmes_list.size(); i++) {
-			larmes_list.get(i).setScope(larmes_list.get(i).getScope() - 1);
-			if (larmes_list.get(i).getScope() == 0) {
-				larmes_list.remove(i);
-			} else {
-				larmes_list.get(i).updateGameObject();
+		else if (hero.getShoot()) {
+			hero.setTimeLarmes(hero.getTimeLarmes()-1);
+		}
+		for(int i=0;i<hero.tears_size();i++) {
+			hero.tears_get(i).setScope(hero.tears_get(i).getScope()-1);
+			if (hero.tears_get(i).getScope()==0) {
+				hero.tears_remove(i);
+			}
+			else {
+				hero.tears_get(i).updateGameObject();
 			}
 		}
 	}
@@ -137,7 +133,22 @@ public abstract class Room {
 	public void drawRoom() {
 
 	}
-
+	
+	public void CreateDoor() {
+		Door d1 = new Door (new Vector2(0.071,0.5),new Vector2(0.2,0.15), true, ImagePaths.OPENED_DOOR,90.0,"East");
+		Door d2 = new Door (new Vector2(0.5,0.929),new Vector2(0.2,0.15), true, ImagePaths.CLOSED_DOOR,0.0,"North");
+		Door d3 = new Door (new Vector2(0.929,0.5),new Vector2(0.2,0.15), true, ImagePaths.OPENED_DOOR,-90.0,"West");
+		Door d4 = new Door (new Vector2(0.5,0.071),new Vector2(0.2,0.15), true, ImagePaths.CLOSED_DOOR,180.0,"South");
+		Door_list.add(d1);
+		Door_list.add(d2);
+		Door_list.add(d3);
+		Door_list.add(d4);
+	}
+	public void DrawDoor() {
+		for(int i =0;i<Door_list.size();i++) {
+			Door_list.get(i).drawGameObject();
+		}
+	}
 	/*
 	 * getters and Setters
 	 */
@@ -165,4 +176,29 @@ public abstract class Room {
 	public void setListEntitiesOnRoom(ArrayList<Entity> listEntitiesOnRoom) {
 		this.listEntitiesOnRoom = listEntitiesOnRoom;
 	}
+
+	public Hero getHero() {
+		return hero;
+	}
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
+
+	public ArrayList<Door> getDoor_list() {
+		return Door_list;
+	}
+
+	public void setDoor_list(ArrayList<Door> door_list) {
+		Door_list = door_list;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
 }

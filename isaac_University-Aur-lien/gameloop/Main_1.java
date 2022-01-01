@@ -1,7 +1,6 @@
 package gameloop;
 
 import gameWorld.GameWorld;
-import gameWorld.Room_boss;
 import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Timer;
@@ -23,7 +22,6 @@ public class Main
 		while (!world.gameOver())
 		{
 			processNextStep(world);
-			
 		}
 		StdDraw.clear();
 		StdDraw.picture(0.5,0.5,ImagePaths.LOSE_SCREEN,1.0,1.0,0);

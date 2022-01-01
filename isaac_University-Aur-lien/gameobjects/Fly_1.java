@@ -3,7 +3,6 @@ package gameobjects;
 import java.util.ArrayList;
 
 import libraries.Vector2;
-import resources.ImagePaths;
 import resources.MonstersInfos;
 public class Fly extends Monsters{
 	
@@ -12,10 +11,11 @@ public class Fly extends Monsters{
 	private boolean Shoot ;
 	
 	public Fly(Vector2 position, Vector2 size, double speed, int life, Vector2 direction, String imagePath) {
-		super(position, size, speed, life, direction, imagePath);
+		super(position, size, speed, life, direction, "Fly.png");
 		Tears_Fly = new ArrayList <Tears>();
 		this.TimeLarmes = MonstersInfos.LARMES_FRAME;
 		this.Shoot = false;
+		// TODO Auto-generated constructor stub		
 	}
 	
 	public int getTimeLarmes()

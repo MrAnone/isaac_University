@@ -1,54 +1,26 @@
 package gameobjects;
 
-import java.util.ArrayList;
-
 import libraries.StdDraw;
 import libraries.Vector2;
-import resources.HeroInfos;
-import resources.MonstersInfos;
-import resources.ImagePaths;
-import gameWorld.Room;
 
-public class Larmes {
+public abstract class Monsters {
 	private Vector2 position;
 	private Vector2 size;
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
-	private int scope;
+	private int life;
 	
-	public Larmes(Vector2 position,Vector2 direction, Vector2 size, double speed, int scope, String imagePath)
+	public Monsters(Vector2 position, Vector2 size, double speed, int life, Vector2 direction, String imagePath)
 	{
 		this.position = position;
-		this.direction = direction;
 		this.size = size;
 		this.speed = speed;
 		this.imagePath = imagePath;
-		this.scope = scope;
+		this.direction = direction;
+		this.life = life;
 	}
-	
-	public static boolean createLarmesHero(Vector2 position,Vector2 direction, boolean Shoot) {
-		if (!Shoot) {
-			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, HeroInfos.LARMES_SPEED, HeroInfos.LARMES_SCOPE,ImagePaths.TEAR);
-			Room.larmes_list.add(shoot);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public static boolean createLarmesFly(Vector2 position,Vector2 direction, ArrayList<Larmes> larmes_list, boolean Shoot) {
-		if (Shoot == false) {
-			Larmes shoot = new Larmes(position,direction, HeroInfos.LARMES_SIZE, MonstersInfos.LARMES_SPEED, MonstersInfos.LARMES_SCOPE,ImagePaths.TEAR);
-			larmes_list.add(shoot);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
+
 	public void updateGameObject()
 	{
 		move();
@@ -58,9 +30,14 @@ public class Larmes {
 	{
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
-		setPosition(positionAfterMoving);
+		if (libraries.Physics.ZonedeJeu(positionAfterMoving,getSize())){
+			setPosition(positionAfterMoving);
+		}
+		else {
+			 direction = new Vector2 (Math.random()*(2.0-0.0)-1.0,Math.random()*(2.0-0.0)-1.0);
+		}
 	}
-	
+
 	public void drawGameObject()
 	{
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
@@ -73,6 +50,8 @@ public class Larmes {
 		normalizedVector.euclidianNormalize(speed);
 		return normalizedVector;
 	}
+	
+	
 	/*
 	 * Getters and Setters
 	 */
@@ -126,13 +105,14 @@ public class Larmes {
 		this.direction = direction;
 	}
 	
-	public int getScope()
+	public int getLife()
 	{
-		return scope;
+		return life;
 	}
 
-	public void setScope(int scope)
+	public void setLife(int life)
 	{
-		this.scope = scope;
+		this.life = life;
 	}
+
 }

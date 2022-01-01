@@ -2,7 +2,6 @@ package gameobjects;
 
 import libraries.Vector2;
 
-
 public class Spider extends Monsters {
 	
 	private int move;
@@ -22,7 +21,7 @@ public class Spider extends Monsters {
 	}
 	
 	public void setStop(boolean stop) {
-		this.stop = stop;
+		this.stop = stop;;
 	}
 	
 	public boolean getStop() {

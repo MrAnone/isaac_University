@@ -1,11 +1,11 @@
 package gameobjects;
 
-import java.util.ArrayList;
-
 import libraries.StdDraw;
 import libraries.Vector2;
-import resources.HeroInfos;
 import resources.ImagePaths;
+import resources.HeroInfos;
+
+import java.util.ArrayList;
 
 public class Hero
 {
@@ -19,9 +19,10 @@ public class Hero
 	private ArrayList<Tears> tears_list;
 	private int  currentCoin;
 	private double  currentHealth;
-	private final int coinMaxValue=99;
-	private double healthMaxValue;
+	private final int coin_maxValue=99;
+	private double health_maxValue;
 	private double dmg;
+
 
 	public Hero(Vector2 position, Vector2 size, double speed, int life, String imagePath)
 	{
@@ -34,9 +35,9 @@ public class Hero
 		this.Shoot = false;
 		tears_list = new ArrayList <Tears>();
 		this.dmg=3.5;
-		this.healthMaxValue=6;
-		this.currentHealth=6;
-		this.currentCoin=5;
+		this.health_maxValue=6;
+		this.currentHealth=5;
+		this.currentCoin=0;
 	}
 
 	public void updateGameObject()
@@ -56,6 +57,7 @@ public class Hero
 			direction = new Vector2();
 		}
 	}
+
 	public void drawGameObject()
 	{
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
@@ -77,7 +79,8 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(1);
-		boolean shoot =createTearsHero(direction);
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
+		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
@@ -88,6 +91,7 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addY(-1);
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
 		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
@@ -99,6 +103,7 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(-1);
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
 		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
@@ -109,64 +114,11 @@ public class Hero
 	{
 		Vector2 direction = new Vector2();
 		direction.addX(1);
+		//boolean shoot = Larmes.createLarmesHero(getPosition(),direction,getShoot());
 		boolean shoot = createTearsHero(direction);
 		if (shoot) {
 			setShoot(true);
 		}
-	}
-	
-	public void pickHeart() {
-		currentHealth+=2;
-		if(currentHealth>healthMaxValue) {
-			currentHealth=healthMaxValue;
-		}
-	}
-	
-	public void pickHalfHeart() {
-		currentHealth+=1;
-		if(currentHealth>healthMaxValue) {
-			currentHealth=healthMaxValue;
-		}
-	}
-	
-	public void pickCoin(Consumable_Objects object){
-		currentCoin+=object.getValue();
-	}
-	/**
-	 * This function up by one the damages the hero does, according to the item of the same name.
-	 */
-	public void BloodOfMartyr() {
-		dmg+=+1;
-	}
-	public void hpUp() {
-		healthMaxValue+=2;
-		currentHealth=healthMaxValue;
-	}
-	public void pickobject(Objects object) {
-
-			int id = object.getId();
-			switch (id) {
-			case 0:
-				 BloodOfMartyr();
-				break;
-			case 1:
-				hpUp();
-			case 2:
-				if(currentHealth<healthMaxValue) {
-					pickHeart();
-				}				
-				break;
-			case 3:
-				if(currentHealth<healthMaxValue) {
-					pickHalfHeart();
-				}
-				break;
-			default:
-				pickCoin((Consumable_Objects) object);
-				
-			}
-		
-
 	}
 
 	/*
@@ -287,29 +239,17 @@ public class Hero
 	{
 		return tears_list.size();
 	}
-
-	public int getCurrentCoin() {
-		return currentCoin;
+	
+	public double getCoin_maxValue() {
+		return coin_maxValue;
 	}
 
-	public void setCurrentCoin(int d) {
-		this.currentCoin = d;
+	public double getHealth_maxValue() {
+		return health_maxValue;
 	}
 
-	public double getCurrentHealth() {
-		return currentHealth;
-	}
-
-	public void setCurrentHealth(double currentHealth) {
-		this.currentHealth = currentHealth;
-	}
-
-	public double getHealthMaxValue() {
-		return healthMaxValue;
-	}
-
-	public void setHealthMaxValue(double health_maxValue) {
-		this.healthMaxValue = health_maxValue;
+	public void setHealth_maxValue(double health_maxValue) {
+		this.health_maxValue = health_maxValue;
 	}
 
 	public double getDmg() {
@@ -320,7 +260,22 @@ public class Hero
 		this.dmg = dmg;
 	}
 
-	public int getCoinMaxValue() {
-		return coinMaxValue;
+	public int getCurrentCoin() {
+		return currentCoin;
 	}
+
+	public void setCurrentCoin(int currentCoin) {
+		this.currentCoin = currentCoin;
+	}
+
+	public double getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setCurrentHealth(double currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+
+	
+	
 }

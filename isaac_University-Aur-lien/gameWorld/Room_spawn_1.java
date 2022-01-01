@@ -3,7 +3,6 @@ package gameWorld;
 import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Vector2;
-import resources.ImagePaths;
 import resources.RoomInfos;
 
 public class Room_spawn extends Room{
@@ -23,12 +22,20 @@ public class Room_spawn extends Room{
 	}
 	
 	public void  drawRoom () {
-		StdDraw.picture(0.5, 0.5, ImagePaths.FLOOR_TILE, 1, 1, 0);
-		StdDraw.text(0.5, 0.5, "SPAWN");
+		StdDraw.setPenColor(StdDraw.GRAY);
+		for (int i = 0; i < RoomInfos.NB_TILES; i++)
+		{
+			for (int j = 0; j < RoomInfos.NB_TILES; j++)
+			{
+				Vector2 position = positionFromTileIndex(i, j);
+				StdDraw.filledRectangle(position.getX(), position.getY(), RoomInfos.HALF_TILE_SIZE.getX(),
+						RoomInfos.HALF_TILE_SIZE.getY());
+			}
+		}
 		hero.drawGameObject();
 		Larmes();
+		drawObject();
 		DrawDoor();
-		//Afficher();
 	}
 	
 	/**
@@ -42,18 +49,6 @@ public class Room_spawn extends Room{
 	{
 		return new Vector2(indexX * RoomInfos.TILE_WIDTH + RoomInfos.HALF_TILE_SIZE.getX(),
 				indexY * RoomInfos.TILE_HEIGHT + RoomInfos.HALF_TILE_SIZE.getY());
-	}
-
-	@Override
-	public void roomCleaned() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void collisionObjectAndHero() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

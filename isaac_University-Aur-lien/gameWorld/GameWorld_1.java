@@ -83,9 +83,9 @@ public class GameWorld
 			StdDraw.picture(0.05+a, 0.95, ImagePaths.HALF_HEART_HUD);
 		}
 		StdDraw.setPenColor();
-		StdDraw.picture(0.05, 0.90, ImagePaths.COIN_HUD); StdDraw.textLeft(0.075, 0.90,""+hero.getCurrentCoin()+"");
-		StdDraw.picture(0.04, 0.85, ImagePaths.SPEED_HUD); StdDraw.textLeft(0.065, 0.85,""+hero.getSpeed()+"");
-		StdDraw.picture(0.04, 0.8, ImagePaths.DMG_HUD); StdDraw.textLeft(0.065, 0.80,""+hero.getDmg()+"");
+		StdDraw.picture(0.05, 0.90, ImagePaths.COIN); StdDraw.textLeft(0.075, 0.90,""+hero.getCurrentCoin()+"");
+		StdDraw.picture(0.04, 0.85, ImagePaths.BOMB); StdDraw.textLeft(0.065, 0.85,""+hero.getSpeed()+"");
+		StdDraw.picture(0.04, 0.8, ImagePaths.KEY); StdDraw.textLeft(0.065, 0.80,""+hero.getDmg()+"");
 	}
 
 	/*
