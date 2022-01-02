@@ -93,8 +93,9 @@ public class Room_classic extends Room {
 	public void updateRoom() {
 
 		collisionEntitiesAndHero();
-		collisionEntitiesAndFlies();
 		collisionEntitiesAndSpider();
+		collisionEntitiesAndFlies();
+		
 		makeSpiderPlay();
 		makeFlyPlay();	
 		makeHeroPlay();
@@ -158,13 +159,14 @@ public class Room_classic extends Room {
 		}
 	}
 	private void collisionEntitiesAndSpider() {
-		for (int i = 0; i < getListEntitiesOnRoom().size(); i++) {
-			for(int j=0;j<Spider_list.size();j++) {
-				Vector2 normalizedDirection = new Vector2(Spider_list.get(j).getDirection());
-				normalizedDirection.euclidianNormalize(Spider_list.get(j).getSpeed());
-				Vector2 positionAfterMoving = Spider_list.get(j).getPosition().addVector(normalizedDirection);
-				if (libraries.Physics.rectangleCollision(positionAfterMoving, Spider_list.get(j).getSize(),
-						Spider_list.get(j).getPosition(), Spider_list.get(j).getSize())) {
+		
+		for (int i = 0; i < Spider_list.size(); i++) {
+			for(int j=0;j<getListEntitiesOnRoom().size();j++) {
+				Vector2 normalizedDirection = new Vector2(Spider_list.get(i).getDirection());
+				normalizedDirection.euclidianNormalize(Spider_list.get(i).getSpeed());
+				Vector2 positionAfterMoving = Spider_list.get(i).getPosition().addVector(normalizedDirection);
+				if (libraries.Physics.rectangleCollision(positionAfterMoving, Spider_list.get(i).getSize(),
+						Spider_list.get(i).getPosition(), Spider_list.get(i).getSize())) {
 					String id = getListEntitiesOnRoom().get(i).getId();
 					switch (id) {
 					case "rock":

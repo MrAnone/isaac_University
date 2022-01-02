@@ -35,8 +35,9 @@ public class Donjon {
 	}
 
 	public void updateRoom() {	
-		currentRoom.updateRoom();
 		collisionDoor();
+		currentRoom.updateRoom();
+		
 		
 	}
 
