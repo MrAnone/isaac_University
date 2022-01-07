@@ -126,7 +126,6 @@ public class Room_classic extends Room {
 
 	@Override
 	public void collisionObjectAndHero() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < getListObjectOnFloor().size(); i++) {
 			if (libraries.Physics.rectangleCollision(getHero().getPosition(), getHero().getSize(),
 					getListObjectOnFloor().get(i).getPosition(), getListObjectOnFloor().get(i).getSize())) {
@@ -170,9 +169,10 @@ public class Room_classic extends Room {
 					String id = getListEntitiesOnRoom().get(i).getId();
 					switch (id) {
 					case "rock":
-						Spider_list.get(j).setDirection(new Vector2());
+						Spider_list.get(i).setDirection(Spider_list.get(i).getDirection());
 						break;
 					default:
+						Spider_list.get(i).setMove(0);
 						break;
 					}
 				}
