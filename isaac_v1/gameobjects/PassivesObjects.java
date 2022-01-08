@@ -24,7 +24,6 @@ public class PassivesObjects extends Objects{
 	 * @return a vector used as the object's position
 	 */
 	public static Vector2 randomPositionObjects() {
-		Random r = new Random();
 		double randomValue1 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
 		double randomValue2 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
 		Vector2 res = new Vector2(randomValue1, randomValue2);

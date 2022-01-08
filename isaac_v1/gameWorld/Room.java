@@ -1,10 +1,7 @@
 package gameWorld;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import javax.management.timer.Timer;
 import gameobjects.Hero;
 import gameobjects.ListEntity;
 import gameobjects.Objects;
@@ -13,7 +10,6 @@ import gameobjects.Door;
 import gameobjects.Entity;
 import gameobjects.Fly;
 import libraries.Vector2;
-import resources.DisplaySettings;
 import resources.ImagePaths;
 
 public abstract class Room {
@@ -23,7 +19,6 @@ public abstract class Room {
 	private ArrayList<Objects> listObjectOnFloor;
 	private ArrayList<Entity> listEntitiesOnRoom;
 	private boolean roomAlredayCleared;
-	private boolean hurtBySpikes;
 	private ArrayList<Door> Door_list;
 	private String ID;
 
@@ -55,6 +50,15 @@ public abstract class Room {
 	public void updateRoom() {
 
 	}
+	
+	public boolean verifPosition(Entity e) {
+		for(int i =0;i<listEntitiesOnRoom.size();i++) {
+			if(e.getPosition()==listEntitiesOnRoom.get(i).getPosition()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Add an item ,from all the items in the game, on the floor if the monsters are
@@ -69,17 +73,14 @@ public abstract class Room {
 			int randomIndex = ThreadLocalRandom.current().nextInt(0, listFullEntities.size());
 			listEntitiesOnRoom.add(listFullEntities.get(randomIndex));
 		}
-
-	}
-
-	public void canGetHurtBySpikes() {
-		if (hurtBySpikes) {
-			hurtBySpikes = false;
-		} else {
-			hurtBySpikes = true;
+		for(int i=0;i<listEntitiesOnRoom.size();i++) {
+			if(!verifPosition(listEntitiesOnRoom.get(i))) {
+				listEntitiesOnRoom.get(i).setPosition(new Vector2( ThreadLocalRandom.current().nextDouble(0.1, 0.9), ThreadLocalRandom.current().nextDouble(0.1, 0.9)));
+			}
 		}
 
 	}
+
 
 	public abstract void collisionObjectAndHero();
 

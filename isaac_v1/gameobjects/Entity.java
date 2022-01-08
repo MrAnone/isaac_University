@@ -1,6 +1,6 @@
 package gameobjects;
 
-import java.util.Random;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import libraries.StdDraw;

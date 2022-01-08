@@ -1,6 +1,7 @@
 package gameobjects;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import libraries.StdDraw;
 import libraries.Vector2;
@@ -33,9 +34,8 @@ public abstract class Objects {
 	 * @return a vector used as the object's position
 	 */
 	public static Vector2 randomPositionObjects() {
-		Random r = new Random();
-		double randomValue1 =  r.nextDouble();
-		double randomValue2 =  r.nextDouble();
+		double randomValue1 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
+		double randomValue2 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
 		Vector2 res = new Vector2(randomValue1, randomValue2);
 		return res;
 	}

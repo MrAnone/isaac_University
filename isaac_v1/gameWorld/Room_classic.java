@@ -26,14 +26,10 @@ public class Room_classic extends Room {
 
 	private void CreateSpider() {
 		for (int i = 0; i < 1; i++) {
-			Spider arraignée = new Spider(
-					new Vector2(
-							Math.random() * ((1.0 - (resources.MonstersInfos.FLY_SIZE.getX()))
-									- (0.0 + (resources.MonstersInfos.FLY_SIZE.getX()))),
-							Math.random()
-									* ((1.0 - (resources.MonstersInfos.FLY_SIZE.getY()))
-											- (0.0 + (resources.MonstersInfos.FLY_SIZE.getY())))
-									- (resources.MonstersInfos.FLY_SIZE.getY() / 2)),
+			double randomValue1 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
+			double randomValue2 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
+			Vector2 res = new Vector2(randomValue1, randomValue2);
+			Spider arraignée = new Spider(res,
 					MonstersInfos.SPIDER_SIZE, MonstersInfos.SPIDER_SPEED, MonstersInfos.SPIDER_LIFE,
 					new Vector2(Math.random() * (2.0 - 0.0) - 1.0, Math.random() * (2.0 - 0.0) - 1.0),
 					ImagePaths.SPIDER);
@@ -42,16 +38,13 @@ public class Room_classic extends Room {
 	}
 
 	private void CreateFly() {
-		Vector2 position = new Vector2(
-				Math.random() * ((1.0 - (resources.MonstersInfos.FLY_SIZE.getX()))
-						- (0.0 + (resources.MonstersInfos.FLY_SIZE.getX()))),
-				Math.random()
-						* ((1.0 - (resources.MonstersInfos.FLY_SIZE.getY()))
-								- (0.0 + (resources.MonstersInfos.FLY_SIZE.getY())))
-						- (resources.MonstersInfos.FLY_SIZE.getY() / 2));
-		Fly mouche = new Fly(position, MonstersInfos.FLY_SIZE, MonstersInfos.FLY_SPEED, MonstersInfos.FLY_LIFE,
-				new Vector2(getHero().getPosition().getX() - position.getX(),
-						getHero().getPosition().getY() - position.getY()),
+		double randomValue1 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
+		double randomValue2 =   ThreadLocalRandom.current().nextDouble(0.1, 0.9);
+		Vector2 res = new Vector2(randomValue1, randomValue2);
+		
+		Fly mouche = new Fly(res, MonstersInfos.FLY_SIZE, MonstersInfos.FLY_SPEED, MonstersInfos.FLY_LIFE,
+				new Vector2(getHero().getPosition().getX() - res.getX(),
+						getHero().getPosition().getY() - res.getY()),
 				ImagePaths.FLY);
 		Fly_list_add(mouche);
 	}
